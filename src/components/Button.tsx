@@ -28,7 +28,7 @@ const Button = ({ title, onPress, variant = 'primary', loading, disabled, style 
       {loading ? (
         <ActivityIndicator color={isSecondary ? "#FF6B6B" : "#FFF"} />
       ) : (
-        <Text style={[styles.text, isSecondary ? styles.secondaryText : styles.primaryText]}>          {title}        </Text>
+        <Text style={[styles.text, isSecondary ? styles.secondaryText : styles.primaryText]}>{title}</Text>
       )}
     </TouchableOpacity>
   );
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: '700',
-    fontSize: 16
+    fontSize: 16,
+    paddingHorizontal: 12
   },
   primaryText: {
     color: '#FFF'

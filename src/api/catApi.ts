@@ -65,4 +65,17 @@ export const catApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
+
+  toggleFavourite: async (imageId: string, isFav: boolean, favId?: number) => {
+    if (isFav && favId) {
+      return apiClient.delete(`/favourites/${favId}`);
+    } else {
+      return apiClient.post('/favourites', { image_id: imageId });
+    }
+  },
+
+  vote: async (imageId: string, value: number) => {
+    // 1 for up, -1 for down
+    return apiClient.post('/votes', { image_id: imageId, value });
+  },
 };

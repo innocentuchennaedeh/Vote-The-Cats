@@ -18,6 +18,17 @@ const HomeScreen = () => {
     queryFn: catApi.getMergedCats,
   });
 
+  const favMutation = useMutation({
+    mutationFn: ({ id, isFav, favId }: { id: string, isFav: boolean, favId?: number }) => 
+      catApi.toggleFavourite(id, isFav, favId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cats'] }),
+  });
+
+  const voteMutation = useMutation({
+    mutationFn: ({ id, value }: { id: string, value: number }) => catApi.vote(id, value),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cats'] }),
+  });
+
   if (isLoading) return <ActivityIndicator style={styles.center} size="large" color="#FF6B6B" />;
   if (isError) return <Text style={styles.center}>Failed to load cats. Please check your API key.</Text>;
 
@@ -39,8 +50,8 @@ const HomeScreen = () => {
           <CatCard
             cat={item}
             cardWidth={(width / numColumns) - 20} // Account for padding
-            onToggleFavourite={() => { }}
-            onVote={() => { }}
+            onToggleFavourite={() => favMutation.mutate({ id: item.id, isFav: !!item.isFavourite, favId: item.favouriteId })}
+            onVote={(value) => voteMutation.mutate({ id: item.id, value })}
           />
         )}
       />

@@ -37,10 +37,10 @@ export const catApi = {
       return images.map((img: any) => {
         const favourite = favs.find((f: any) => f.image_id === img.id);
         const imageVotes = votes.filter((v: any) => v.image_id === img.id);
-        
+
         // Calculate score: TheCatAPI uses value 1 for up, 0 or -1 for down
         const score = imageVotes.reduce((acc: number, curr: any) => {
-           return acc + (curr.value === 1 ? 1 : -1);
+          return acc + (curr.value === 1 ? 1 : -1);
         }, 0);
 
         return {

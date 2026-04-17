@@ -55,4 +55,14 @@ export const catApi = {
       throw error;
     }
   },
+
+  uploadImage: async (uri: string, type: string, name: string) => {
+    const formData = new FormData();
+    // React Native requires this specific formatting for FormData files
+    formData.append('file', { uri, type, name } as any);
+
+    return apiClient.post('/images/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
 };
